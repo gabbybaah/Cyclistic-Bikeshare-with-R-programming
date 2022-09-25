@@ -1,0 +1,1454 @@
+library(tidyverse)
+library(readr)
+#1
+jan_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202101-divvy-tripdata_cleaned.csv")
+head(jan_df)
+#### ordering the days of the week
+jan_df$day_of_week1 <- factor(jan_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+jan_df %>%
+  ggplot(aes(x = day_of_week1, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+
+##### Members recorded very significant usage across the days of the week with numbers ranging between 8,872 and 12,643 with Sunday having the highest and Tuesday having the lowest 
+##### Casual usage was significantly low compared with member usage with numbers ranging from 1,882 to 4003 with Monday having the highest and Thursday recording the lowest. 
+
+#2
+jan_df %>%
+  ggplot(aes(x = day_of_week1, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### 	Classic bikes are the most used bikes for each day of the week for members followed by electric and just one user for docked bikes 
+
+#3
+jan_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Members have the most patronage and we have low patronage for casuals 
+
+#4
+ggplot(data = jan_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Higher ride average for casuals compared to members which shows casuals rode for longer
+
+#5
+ggplot(data = jan_df, aes(x = day_of_week1, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Casuals maintain higher averages across all days of the week in January
+
+#6
+ggplot(data = jan_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bikes by were rode for longer distances by casuals and classics for casuals
+
+#7
+ggplot(data = jan_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Max ride duration for casuals because of higher docked bike averages
+
+#8
+ggplot(data = jan_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Docked bikes shows highest ride duration for January
+
+
+## FEBRARY ANALYSIS
+feb_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202102-divvy-tripdata_cleaned.csv")
+
+summary(feb_df)
+head(feb_df)
+#### ordering the days of the week
+feb_df$day_of_week2 <- factor(feb_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+feb_df %>%
+  ggplot(aes(x = day_of_week2, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week in February",
+       x = "Day of the week", y = "Total")
+##### Members show highest patronage on all days
+
+#2
+feb_df %>%
+  ggplot(aes(x = day_of_week2, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Classic bikes remain the most used bike with the highest use on Saturday
+
+#3
+feb_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Members had the highest patronage with classic bikes
+
+#4
+ggplot(data = feb_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Casual users had the highest average in February
+
+#5
+ggplot(data = feb_df, aes(x = day_of_week2, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Higher averages for all casual users across all days
+
+#6
+ggplot(data = feb_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bikes have the highest averages across the biketypes
+
+
+#7
+ggplot(data = feb_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Close Maximum ride duration for both User types
+
+#8
+ggplot(data = feb_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Close max ride duration for different bike types and users 
+
+
+### MARCH ANALYSIS
+mar_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202103-divvy-tripdata_cleaned.csv")
+head(mar_df)
+#### ordering the days of the week
+mar_df$day_of_week3 <- factor(mar_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+mar_df %>%
+  ggplot(aes(x = day_of_week3, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Higher patronage for members in the weekdays but close figures on weekends
+
+#2
+mar_df %>%
+  ggplot(aes(x = day_of_week3, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Classic bikes has the highest patronage across all weekdays
+
+#3
+mar_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### As shown earlier classic bikes had the highest patronage by members
+##### Patronage from Casuals generally low
+
+#4
+ggplot(data = mar_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Higher Average for casual users
+
+#5
+ggplot(data = mar_df, aes(x = day_of_week3, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+#6
+ggplot(data = mar_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+
+#7
+ggplot(data = mar_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Max Ride duration recorded for casuals 
+
+#8
+ggplot(data = mar_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Highest Maximum duration attributed to Docked bike types by Casuals 
+
+
+## APRIL ANALYSIS
+apr_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202104-divvy-tripdata_cleaned.csv")
+head(apr_df)
+
+#### ordering the days of the week
+apr_df$day_of_week4 <- factor(apr_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+apr_df %>%
+  ggplot(aes(x = day_of_week4, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Numbers start rising with member patronage higher on weekdays and close on weekends
+
+#2
+apr_df %>%
+  ggplot(aes(x = day_of_week4, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Classic bikes are still the most patronized and Docked types are the least
+
+#3
+apr_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Members and casuals patronized classic bikes the most
+
+#4
+ggplot(data = apr_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Casuals continue to maintain higher averages for ride durations
+
+
+#5
+ggplot(data = apr_df, aes(x = day_of_week4, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+
+#6
+ggplot(data = apr_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bikes have the highest Max duration
+
+#7
+ggplot(data = apr_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+
+#8
+ggplot(data = apr_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Only Casuals users patronize Docked type bikes for long distances 
+
+
+###MAY ANALYSIS
+may_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202105-divvy-tripdata_cleaned.csv")
+head(may_df)
+
+#### ordering the days of the week
+may_df$day_of_week5 <- factor(may_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+may_df %>%
+  ggplot(aes(x = day_of_week5, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week in May",
+       x = "Day of the week", y = "Total")
+##### Patronage rise generally showing close patronage figures with members surpassing 
+##### Casuals on weekdays and Casuals surpassing Member users on the weekends
+
+#2
+may_df %>%
+  ggplot(aes(x = day_of_week5, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Close patronage figures for Classic bikes and Electric bikes on the weekday
+##### With Classic Bike surpassing other bike types on the weekend. Increase 
+##### Docked type bike patronage 
+
+#3
+may_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### High patronage for both Casual and Member users with Member Classic bike Users
+##### still surpassing Casual classic bike users but electric bike usage figures are similar
+
+
+#4
+ggplot(data = may_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### High average ride duration for Casual Users
+
+
+#5
+ggplot(data = may_df, aes(x = day_of_week5, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+#6
+ggplot(data = may_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bikes had the highest averages 
+
+#7
+ggplot(data = may_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Casual Users continue to show high ride averages 
+
+
+#8
+ggplot(data = may_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Docked bike type continue to maximum duration
+
+
+### JUNE ANALYSIS
+jun_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202106-divvy-tripdata_cleaned.csv")
+head(jun_df)
+#### ordering the days of the week
+jun_df$day_of_week6 <- factor(jun_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+jun_df %>%
+  ggplot(aes(x = day_of_week6, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Close total patronage for different customer types with higher numbers for casual users on weekends
+
+#2
+jun_df %>%
+  ggplot(aes(x = day_of_week6, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Higher patronage for classic bikes and then electric bikes
+
+
+#3
+jun_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Close Patronage figures both Casual and Member Users for different bike types
+
+#4
+ggplot(data = jun_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Casual Users average ride duration are higher compared to Member users
+
+#5
+ggplot(data = jun_df, aes(x = day_of_week6, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+#6
+ggplot(data = jun_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bike types continue to be the longest driven bike types
+
+
+#7
+ggplot(data = jun_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Casual bike users recorded maximum diration 
+
+#8
+ggplot(data = jun_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+### JULY ANALYSIS 
+jul_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202107-divvy-tripdata_cleaned.csv")
+head(jul_df)
+
+#### ordering the days of the week
+jul_df$day_of_week7 <- factor(jul_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+jul_df %>%
+  ggplot(aes(x = day_of_week7, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Close total patronage for different Users with increased numbers on the Weekend for Casual users
+
+
+#2
+jul_df %>%
+  ggplot(aes(x = day_of_week7, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Classic bike types remain the most preferred bike
+
+#3
+jul_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Close patronage for different bike types with casual user having higher numbers 
+##### than member users for electric bike types
+
+#4
+ggplot(data = jul_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Casual members continue to have high averages 
+
+#5
+ggplot(data = jul_df, aes(x = day_of_week7, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+#6
+ggplot(data = jul_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bike types remain the longest ridden bike 
+
+#7
+ggplot(data = jul_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+#8
+ggplot(data = jul_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Docked bike types by casual users recorded the max ride duration 
+
+
+###AUGUST ANALYSIS 
+aug_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202108-divvy-tripdata_cleaned.csv")
+head(aug_df)
+
+#### ordering the days of the week
+aug_df$day_of_week8 <- factor(aug_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+aug_df %>%
+  ggplot(aes(x = day_of_week8, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Close figures on weekdays for different user types and higher figures on the weekend for Casual Users
+
+#2
+aug_df %>%
+  ggplot(aes(x = day_of_week8, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Casual Bike types remain the most patronized 
+
+#3
+aug_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Close figures for both electric bikes and classic bike tpes
+
+#4
+ggplot(data = aug_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Casual user types continue to have higher averages
+
+#5
+ggplot(data = aug_df, aes(x = day_of_week8, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+
+#6
+ggplot(data = aug_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Casual Users continue to show higher averages for different bike types
+
+#7
+ggplot(data = aug_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+#8
+ggplot(data = aug_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Docked bike types remain the most patronized bike type
+
+
+### SEPTEMBER ANALYSIS
+sep_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202109-divvy-tripdata_cleaned.csv")
+head(sep_df)
+#### ordering the days of the week
+sep_df$day_of_week9 <- factor(sep_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+sep_df %>%
+  ggplot(aes(x = day_of_week9, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Member Users show higher patronage on Weekdays with Wednesdays and Thursdays
+##### being the most patronized while Casual Users had higher patronage on the weekend
+##### in general there are close patronage figures for both User groups
+
+
+#2
+sep_df %>%
+  ggplot(aes(x = day_of_week9, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Classic bikes remain the most used bike type and then Electric bikes 
+
+
+#3
+sep_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Member Users have the highest Usage of Classic bikes and then Causal Users 
+##### Casual users have higher patronage of Electric bike types
+
+#4
+ggplot(data = sep_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Higher Average duration for Casual users
+
+#5
+ggplot(data = sep_df, aes(x = day_of_week9, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Higher averages for Casual Users across all the days of the week
+
+
+#6
+ggplot(data = sep_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked bike type Show the highest average for casual customers  
+
+#7
+ggplot(data = sep_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Similar Maximum ride duration in the month of September  
+
+
+#8
+ggplot(data = sep_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Similar Maximum duration for both members and casual users for different bike types
+
+
+oct_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202110-divvy-tripdata_cleaned.csv")
+head(oct_df)
+
+#### ordering the days of the week
+oct_df$day_of_week10 <- factor(oct_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+oct_df %>%
+  ggplot(aes(x = day_of_week10, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week in October",
+       x = "Day of the week", y = "Total")
+##### Consistent high patronage across all days for member users but lower patronage
+##### on the weekdays for Casual users and higher patronage on the weekends
+
+
+#2
+oct_df %>%
+  ggplot(aes(x = day_of_week10, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Close patronage numbers for both Classic and Electric bike types across all
+##### days of the week
+
+#3
+oct_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Higher patronage for Electric bike types compared to Classic bike types
+##### Member users have higher patronage figures
+
+
+#4
+ggplot(data = oct_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Average continuously higher for Casual users compared to Member Users
+
+#5
+ggplot(data = oct_df, aes(x = day_of_week10, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Casual users Higher averages across all days with the weekend having the highest
+
+#6
+ggplot(data = oct_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Higher usage for Docked bikes by Casual users
+
+#7
+ggplot(data = oct_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Casual Users continue to have higher Maximum duration
+
+#8
+ggplot(data = oct_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+
+nov_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202111-divvy-tripdata_cleaned.csv")
+head(nov_df)
+
+#### ordering the days of the week
+nov_df$day_of_week11 <- factor(nov_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+nov_df %>%
+  ggplot(aes(x = day_of_week11, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week in November",
+       x = "Day of the week", y = "Total")
+##### Member users have the highest patronage across all days with gradual decline towards the weekend 
+##### while Casual users show consistently low patronage
+
+#2
+nov_df %>%
+  ggplot(aes(x = day_of_week11, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Electric bike type usage surpass Classic bike usage still showing a gradual
+##### decline towards the end of the week
+
+
+#3
+nov_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Member usage for both Electric and Classic bike types are close. This trend is also 
+##### seen in Casual users as well
+
+#4
+ggplot(data = nov_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Higher averages for Casual users compared to Member users
+
+
+#5
+ggplot(data = nov_df, aes(x = day_of_week11, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Casual Users continue to show higher averages across all days 
+
+#6
+ggplot(data = nov_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Higher ride duration for Docked bikes and Casual users ride bikes for longest durations
+
+#7
+ggplot(data = nov_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Casual users continue to show higher Max ride duration
+
+#8
+ggplot(data = nov_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+
+#1
+dec_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/202112-divvy-tripdata_cleaned.csv")
+head(dec_df)
+#### ordering the days of the week
+dec_df$day_of_week12 <- factor(dec_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+dec_df %>%
+  ggplot(aes(x = day_of_week12, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total for each day of week",
+       x = "Day of the week", y = "Total")
+##### Member users have the highest patronage across all days with the Middle of the week
+##### recording the highest patronage while Casual users recorded low patronage
+
+
+#2
+dec_df %>%
+  ggplot(aes(x = day_of_week12, fill = rideable_type)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL BIKE TYPE USAGE FOR EACH DAY OF WEEK",
+       x = "Day of the week", y = "Total")
+##### Highest patronage recorded from Electric bikes and then Classic bikes
+
+#3
+dec_df %>%
+  ggplot(aes(x = rideable_type, fill = member_casual)) +
+  geom_bar(position = "dodge", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL USAGE FOR EACH BIKE TYPE",
+       x = "BIKE TYPE", y = "Total")
+##### Highest patronage recorded for members using Electric Bike types and the classic
+##### Similar trend seen with casual users
+
+#4
+ggplot(data = dec_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Average ride duration(HRS)")
+##### Higher ride average for causal users compared to Member users
+
+#5
+ggplot(data = dec_df, aes(x = day_of_week12, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR DIFFERENT WEEKDAYS 
+       BASED ON CUSTOMER TYPES",
+       x = "Week Day", y = "Average ride duration(HRS)")
+##### Higher average across all days for casual users
+
+#6
+ggplot(data = dec_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER AVERAGE RIDE DURATION 
+       FOR DIFFERENT BIKE TYPES",
+       x = "Customer", y = "AVERAGE ride duration(HRS)")
+##### Docked types continue to record the highest averages  
+
+#7
+ggplot(data = dec_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+#8
+ggplot(data = dec_df, aes(x = member_casual, ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  facet_wrap(~rideable_type) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "CUSTOMER Max RIDE DURATION FOR 
+       DIFFERENT BIKE TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+
+
+#OVER VIEW OF THE ENTIRE YEAR
+usertype_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/customer_year_stat.csv")
+head(usertype_df)
+
+usertype_df %>%
+  ggplot(aes(x = member_casual, total_rides, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "sum",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL PATRONGE FOR CUSTOMER TYPES",
+       x = "Customer", y = "Total")
+##### Members had a higher patronage but Casual users had a 45% patronage which shows a huge target market
+##### and potential Member base. 
+
+usertype_df %>%
+  ggplot(aes(x = member_casual, avg_ride_duration, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "AVERAGE RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Casual Users had the highest average duration which means on average they rode the 
+##### bikes for longest periods and longer times
+
+usertype_df %>%
+  ggplot(aes(x = member_casual, max_ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "MAX RIDE DURATION FOR CUSTOMER TYPES",
+       x = "Customer", y = "Max ride duration(HRS)")
+##### Highest ride duration recorded for Casual users which show they rode for the longest distances
+
+
+### Ordering the months
+usertype_df$ride_month1 <- factor(usertype_df$ride_month, levels = c("January", "February", "March", "April", "May", "June",
+                                                                     "July", "August", "September", "October", "November", "December"))
+### Total number of users for each month
+usertype_df %>%
+  ggplot(aes(x = ride_month1,  total_rides, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "sum",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Total for each month",
+       x = "Month of Year", y = "Total")
+##### There is a trend of low figures from the beginning of the year which rises significantly and peaks towards 
+##### the middle and falls again towards the end of the year.This pattern is visible for for both 
+##### customer or user types with member users having higher patronage towards the end of the year.
+
+
+### AVERAGE RIDE DURATION FOR EACH MONTH
+usertype_df %>%
+  ggplot(aes(x = ride_month1, avg_ride_duration, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean", alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "AVERAGE BIKE DURATION FOR EACH MONTH",
+       x = "BIKE TYPE", y = "Avergae duration")
+##### Slightly higher average in February for member users and quiet consistent average ride duration 
+##### for the entire year. Casual users also had a significantly high average in February and higher 
+##### consistent averages for the subsequent months compared with Member users. 
+
+
+
+## DAY OF WEEK ANALYSIS FOR THE ENTIRE YEAR
+weekday_df <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/day_of_wee_for _wholeyear.csv")
+colnames(weekday_df)
+
+#### ordering the days of the week
+weekday_df$day_of_weekt <- factor(weekday_df$day_of_week, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"))
+### Total number of users for each week
+weekday_df %>%
+  ggplot(aes(x = day_of_weekt, number_of_rides, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "sum",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Total for each Day of Week",
+       x = "Day of the Week", y = "Total")
+##### Member users show consistent patronage through out the week while casual users have highest 
+##### patronage on Mondays and Tuesdays which gradually declines towards the weekend and 
+##### starts to peak towards the beginning of the week
+
+
+### MAX RIDE DURATION FOR EACH DAY OF WEEK
+weekday_df %>%
+  ggplot(aes(x = day_of_weekt, max_ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Max Ride Duration for each Day of Week",
+       x = "Day of the Week", y = "Ride_duration")
+##### Mondays, Sundays and Tuesdays recorded the maximum ride duration at 932 hours
+
+
+### MAX RIDE DURATION WITHOUT DOCKED BIKES
+weekday_df %>%
+  filter(rideable_type == "classic_bike" | rideable_type == "electric_bike") %>% 
+  ggplot(aes(x = day_of_weekt, max_ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Max Ride Duration for each Day of Week",
+       x = "Day of the Week", y = "Ride_duration")
+##### With the exemption of Docked bike types we see equal duration trends
+##### Highest Maximum durations and averages were solely influenced by Docked bike types
+
+
+### AERAGE RIDE DURATION FOR EACH DAY OF WEEK
+weekday_df %>%
+  ggplot(aes(x = day_of_weekt, avg_ride_duration, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Avg Ride Duration for each Day of Week",
+       x = "Day of the Week", y = "Ride Duration")
+##### Consistently significant difference in Averages with Casual users 
+maintaining higher averages and Tuesdays recording the highest average.
+
+
+### AVERAGE RIDE DURATION  FOR EACH WEEKDAY WITHOUT DOCKED BIKES
+weekday_df %>%
+  filter(rideable_type == "classic_bike" | rideable_type == "electric_bike") %>% 
+  ggplot(aes(x = day_of_weekt, avg_ride_duration, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(title = "Avg Ride Duration for each Day of Week",
+       x = "Day of the Week", y = "Ride Duration")
+##### Higher averages for all days for casual users even without docked bike types
+##### which shows casual users ride bikes for longest distances.
+
+### BIKE TYPE PATRONAGE FOR THE YEAR
+weekday_df %>%
+  ggplot(aes(x = rideable_type, number_of_rides, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "sum",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total Usage for Each Bike Type For the Year",
+       x = "Bike Type", y = "Total")
+##### Classic bike types had the highest usage for the entire year at 35.47% for member 
+##### users and 22.64% for Casual users. Electric bike types were the next highly 
+##### patronized bike type for Members and Casuals at 19.33% for Members and 16.98% for Casual users.
+##### Docked type bike were the least preferred with patronage only from Casual riders at 5.58%. 
+
+
+### RIDE DURATION FOR EACH BIKE TYPE
+weekday_df %>%
+  ggplot(aes(x = rideable_type, max_ride_duration_hrs, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "max",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Max Duration for Each Bike Type For the Year",
+       x = "Bike Type", y = "Max Duration (HRS)")
+##### Docked type bikes were ridden the longest distances while all other bike types 
+##### showed similar average and maximum bike durations.
+
+### AVERAGE RIDE DURATION FOR EACH BIKE TYPE BASED ON CUSTOMER PATRONAGE
+weekday_df %>%
+  ggplot(aes(x = rideable_type, avg_ride_duration, fill = member_casual)) +
+  geom_bar(position = "dodge", stat = "summary", fun = "mean",alpha = 0.5) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Avg Duration for Each Bike Type For the Year",
+       x = "Bike Type", y = "Average Duration (HRS)")
+##### Casual users had the highest averages for different bike types with docked bike types
+ having the longest ride distances and then classic bikes and the electric
+
+### TOTAL RIDES FOR EACH DAY OF WEEK FOR DIFFERENT CUSTOMER TYPES
+df_ce <- weekday_df %>%
+  filter(member_casual == "casual" & rideable_type == "electric_bike")
+df_me <- weekday_df %>%
+  filter(member_casual == "member" & rideable_type == "electric_bike")
+df_cc <- weekday_df %>%
+  filter(member_casual == "casual" & rideable_type == "classic_bike")
+df_mc <- weekday_df %>%
+  filter(member_casual == "member" & rideable_type == "classic_bike")
+df_cd <- weekday_df %>%
+  filter(member_casual == "casual" & rideable_type == "docked_bike")
+df_md <- weekday_df %>%
+  filter(member_casual == "member" & rideable_type == "docked_bike")
+
+ggplot() +
+  geom_line(data = df_ce, aes(x = day_of_weekt, y = number_of_rides, group = 1, color="casual_electric")) +
+  geom_point(data = df_ce, aes(x = day_of_weekt, y = number_of_rides, color="casual_electric")) +
+  geom_line(data = df_me, aes(x = day_of_weekt, y = number_of_rides, group = 1, color="member_electric")) +
+  geom_point(data = df_me, aes(x = day_of_weekt, y = number_of_rides, color="member_electric")) +
+  geom_line(data = df_cc, aes(x = day_of_weekt, y = number_of_rides, group = 1, color="casual_classic")) +
+  geom_point(data = df_cc, aes(x = day_of_weekt, y = number_of_rides, color="casual_classic")) +
+  geom_line(data = df_mc, aes(x = day_of_weekt, y = number_of_rides, group = 1, color="member_classic")) +
+  geom_point(data = df_mc, aes(x = day_of_weekt, y = number_of_rides, color="member_classic")) +
+  geom_line(data = df_cd, aes(x = day_of_weekt, y = number_of_rides, group = 1, color="casual_docked")) +
+  geom_point(data = df_cd, aes(x = day_of_weekt, y = number_of_rides, color="casual_docked")) +
+  geom_point(data = df_md, aes(x = day_of_weekt, y = number_of_rides, color="member_docked")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Total Rides for each Day of Week Per-Bike type",
+       x = "Day of the Week", y = "Total Number")
+
+
+### WEEKLY TRENDS FOR THE ENTIRE YEAR
+week_num <- read_csv("C:/Users/user/Desktop/Case Study/CASESTUDY CYCLING DATA/Cleaned Data/weekly_trends_wholeyear.csv")
+head(week_num)
+
+df_ce1 <- week_num %>%
+  filter(member_casual == "casual" & rideable_type == "electric_bike")
+df_me1 <- week_num %>%
+  filter(member_casual == "member" & rideable_type == "electric_bike")
+df_cc1 <- week_num %>%
+  filter(member_casual == "casual" & rideable_type == "classic_bike")
+df_mc1 <- week_num %>%
+  filter(member_casual == "member" & rideable_type == "classic_bike")
+df_cd1 <- week_num %>%
+  filter(member_casual == "casual" & rideable_type == "docked_bike")
+df_md1 <- week_num %>%
+  filter(member_casual == "member" & rideable_type == "docked_bike")
+
+ggplot() +
+  geom_line(data = df_ce1, aes(x = week_number, y = number_of_rides, group = 1, color="casual_electric")) +
+  geom_point(data = df_ce1, aes(x = week_number, y = number_of_rides, color="casual_electric")) +
+  geom_line(data = df_me1, aes(x = week_number, y = number_of_rides, group = 1, color="member_electric")) +
+  geom_point(data = df_me1, aes(x = week_number, y = number_of_rides, color="member_electric")) +
+  geom_line(data = df_cc1, aes(x = week_number, y = number_of_rides, group = 1, color="casual_classic")) +
+  geom_point(data = df_cc1, aes(x = week_number, y = number_of_rides, color="casual_classic")) +
+  geom_line(data = df_mc1, aes(x = week_number, y = number_of_rides, group = 1, color="member_classic")) +
+  geom_point(data = df_mc1, aes(x = week_number, y = number_of_rides, color="member_classic")) +
+  geom_line(data = df_cd1, aes(x = week_number, y = number_of_rides, group = 1, color="casual_docked")) +
+  geom_point(data = df_cd1, aes(x = week_number, y = number_of_rides, color="casual_docked")) +
+  geom_point(data = df_md1, aes(x = week_number, y = number_of_rides, color="member_docked")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Weekly Total Bike Rides Per-Bike type",
+       x = "Week Number", y = "Total Number")
+##### Casual bikes are predominantly the most used rideable type throughout the year with a slight decrease in patronage at the end of the year
+##### Patronage increasing above classic bike types towards the end of the year.
+
+
+### AVERAGE RIDE DURATION TRENDS FOR THE YEAR
+ggplot() +
+  geom_line(data = df_ce1, aes(x = week_number, y = avg_ride_duration, group = 1, color="casual_electric")) +
+  geom_point(data = df_ce1, aes(x = week_number, y = avg_ride_duration, color="casual_electric")) +
+  geom_line(data = df_me1, aes(x = week_number, y = avg_ride_duration, group = 1, color="member_electric")) +
+  geom_point(data = df_me1, aes(x = week_number, y = avg_ride_duration, color="member_electric")) +
+  geom_line(data = df_cc1, aes(x = week_number, y = avg_ride_duration, group = 1, color="casual_classic")) +
+  geom_point(data = df_cc1, aes(x = week_number, y = avg_ride_duration, color="casual_classic")) +
+  geom_line(data = df_mc1, aes(x = week_number, y = avg_ride_duration, group = 1, color="member_classic")) +
+  geom_point(data = df_mc1, aes(x = week_number, y = avg_ride_duration, color="member_classic")) +
+  geom_line(data = df_cd1, aes(x = week_number, y = avg_ride_duration, group = 1, color="casual_docked")) +
+  geom_point(data = df_cd1, aes(x = week_number, y = avg_ride_duration, color="casual_docked")) +
+  geom_point(data = df_md1, aes(x = week_number, y = avg_ride_duration, color="member_docked")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "Average Ride Duration for Each Week Per-Bike type",
+       x = "Week Number", y = "Average")
+##### Docked type bikes were driven the longest distances while all other bike types showed similar average and maximum bike durations.
+
+### TOTAL USAGE FOR EACH WEEK FOR EACH CUSTOMER TYPE
+df_y1 <- week_num %>%
+  filter(member_casual == "casual")
+df_y2 <- week_num %>%
+  filter(member_casual == "member")
+
+ggplot() +
+  geom_line(data = df_y1, aes(x = week_number, y = number_of_rides, group = 1, color="casual")) +
+  geom_point(data = df_y1, aes(x = week_number, y = number_of_rides, color="casual")) +
+  geom_line(data = df_y2, aes(x = week_number, y = number_of_rides, group = 1, color="member")) +
+  geom_point(data = df_y2, aes(x = week_number, y = number_of_rides, color="member")) +
+  theme_bw() +
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
+  labs(title = "TOTAL FOR EACH WEEK PER-CUSTOMER TYPE",
+       x = "Week Number", y = "Total Number")
+##### Casual users show very low patronage in the beginning of the year which peaks and picks up
+##### and gradually goes back down at the end of the year.
